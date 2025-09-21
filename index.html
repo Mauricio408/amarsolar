@@ -1,610 +1,534 @@
+<!-- 
+  Amarsolar - Site V3
+  Versão moderna e responsiva utilizando Tailwind CSS.
+  Todo o código (HTML, CSS e JS) em um único arquivo.
+
+  Principais melhorias:
+  - Design moderno e minimalista com Tailwind CSS.
+  - Layout totalmente responsivo (mobile, tablet e desktop).
+  - Animações e transições CSS para uma experiência mais fluida.
+  - Lógica do formulário de contato simplificada para o WhatsApp.
+  - Modais para a seção 'Entenda' e 'Portfólio' com um design mais moderno.
+  - Chatbot simples para engajamento inicial.
+  
+  INSTRUÇÕES DE CONFIGURAÇÃO:
+  - Substitua o NÚMERO DE WHATSAPP na constante WHATSAPP_NUMBER.
+  - Para as imagens, URLs de placeholder foram usadas para demonstrar o layout.
+-->
 <!doctype html>
-
 <html lang="pt-BR">
-
 <head>
-
-  <meta charset="utf-8" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="theme-color" content="#2C1A47" />
-
-  <title>Amarsolar — Energia Solar em Amargosa</title>
-
-  <meta name="description" content="Amarsolar: soluções de energia solar rápidas, de qualidade e com baixo custo. Projetos, orçamento e consultoria em Amargosa." />
-
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-
-    :root{--primary:#2C1A47;--accent:#FFD700;--bg:#f6f7fb;--card:#ffffff;--muted:#6b6f76;--radius:12px;--glass:rgba(255,255,255,0.7);}
-
-    *{box-sizing:border-box}
-
-    html,body{height:100%;margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:var(--primary);background:linear-gradient(180deg,#f8f9fc 0%, #eef2fb 100%)}
-
-    a{color:inherit;text-decoration:none;transition:color .3s}
-
-    a:hover{color:var(--accent)}
-
-    header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:var(--card);backdrop-filter:blur(6px);box-shadow:0 8px 24px rgba(44,26,71,0.06);position:sticky;top:0;z-index:50}
-
-    .brand{display:flex;align-items:center;gap:14px}
-
-    .logo{width:58px;height:58px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#3b2a6a);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
-
-    .nav{display:flex;gap:18px;align-items:center}
-
-    nav a{padding:8px 12px;border-radius:10px;font-weight:600;transition:background-color .3s}
-
-    nav a.cta{background:var(--accent);color:var(--primary)}
-
-    nav a.cta:hover{background:#ffea61}
-
-    .container{max-width:1100px;margin:30px auto;padding:0 20px}
-
-    section h2{font-size:2em;margin-bottom:10px}
-
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;animation:fadeInUp 1s}
-
-    .hero-card{background:var(--card);padding:28px;border-radius:16px;box-shadow:0 10px 30px rgba(44,26,71,0.06)}
-
-    .slogan{font-size:22px;font-weight:700;color:var(--primary);margin:0 0 10px}
-
-    .lead{color:var(--muted);margin-bottom:18px}
-
-    .cta-row{display:flex;gap:12px}
-
-    .btn{padding:12px 16px;border-radius:10px;font-weight:700;border:none;cursor:pointer;transition:transform .2s, box-shadow .2s}
-
-    .btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(44,26,71,0.1)}
-
-    .btn-primary{background:var(--primary);color:white}
-
-    .btn-accent{background:var(--accent);color:var(--primary)}
-
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
-
-    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(44,26,71,0.04);cursor:pointer;transition:transform .2s, box-shadow .2s}
-
-    .card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(44,26,71,0.1)}
-
-    .card h4{margin:0 0 8px}
-
-    .card p{margin:0;color:var(--muted);font-size:14px}
-
-    .about{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
-
-    .values{display:flex;flex-direction:column;gap:12px}
-
-    .value{background:linear-gradient(90deg, rgba(44,26,71,0.04), rgba(255,215,0,0.04));padding:12px;border-radius:12px;animation:fadeInUp .8s}
-
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-
-    .gallery img{width:100%;height:170px;object-fit:cover;border-radius:10px;cursor:pointer;transition:transform .2s}
-
-    .gallery img:hover{transform:scale(1.03)}
-
-    form{display:grid;gap:12px}
-
-    input,select,textarea{padding:10px;border-radius:8px;border:1px solid #e6e7ee;font-size:15px;transition:border-color .2s}
-
-    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary)}
-
-    textarea{min-height:120px;resize:vertical}
-
-    .testimonials{display:flex;gap:12px;overflow-x:scroll;scroll-snap-type:x mandatory;padding-bottom:10px}
-
-    .testimonial{min-width:300px;background:var(--card);padding:16px;border-radius:12px;scroll-snap-align:start}
-
-    footer{margin-top:40px;padding:28px;background:linear-gradient(180deg,var(--card),#fff);border-top:1px solid rgba(0,0,0,0.03)}
-
-    .whatsapp{position:fixed;right:18px;bottom:18px;background:#25D366;color:white;border-radius:60px;padding:14px 16px;box-shadow:0 8px 28px rgba(44,26,71,0.18);z-index:80;display:flex;align-items:center;gap:8px}
-
-    .whatsapp svg{width:24px;height:24px}
-
-    .chatbot-btn{position:fixed;right:18px;bottom:78px;background:#5A4A7A;color:white;border-radius:50%;width:50px;height:50px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(44,26,71,0.18);z-index:90;cursor:pointer;transition:transform .2s}
-
-    .chatbot-btn:hover{transform:scale(1.1)}
-
-    .chatbot-modal{position:fixed;bottom:80px;right:20px;width:340px;height:450px;background:white;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.2);display:flex;flex-direction:column;z-index:100;transform:scale(0.9);opacity:0;transition:transform .3s ease-in-out, opacity .3s ease-in-out;transform-origin:bottom right;display:none}
-
-    .chatbot-modal.active{display:flex;transform:scale(1);opacity:1}
-
-    .chatbot-header{background:var(--primary);color:white;padding:12px 18px;border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:center}
-
-    .chatbot-body{flex:1;padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
-
-    .chat-message{max-width:80%;padding:10px;border-radius:12px}
-
-    .chat-user{background:#e7f5ff;align-self:flex-end}
-
-    .chat-bot{background:#f0f0f0;align-self:flex-start}
-
-    .chatbot-input-container{padding:10px;border-top:1px solid #eee;display:flex;gap:8px}
-
-    .chatbot-input{flex:1;padding:8px;border-radius:8px;border:1px solid #ddd}
-
-    .chatbot-send{padding:8px 12px;border:none;background:var(--primary);color:white;border-radius:8px;cursor:pointer}
-
-    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100;opacity:0;pointer-events:none;transition:opacity .3s}
-
-    .modal-backdrop.active{opacity:1;pointer-events:auto}
-
-    .modal-content{max-width:760px;background:white;padding:20px;border-radius:12px;position:relative}
-
-    .close-modal{position:absolute;top:10px;right:10px;border:none;background:none;font-size:18px;cursor:pointer;color:var(--muted)}
-
-    @media (max-width:980px){.hero{grid-template-columns:1fr}.about{grid-template-columns:1fr}.hero-card{order:2}}
-
-    @media (max-width:768px){header{flex-direction:column;align-items:flex-start;gap:12px;padding:12px 20px}.nav{width:100%;justify-content:center}.chatbot-modal{width:90%;height:60%;bottom:60px;right:5%}.whatsapp{bottom:12px;right:12px}}
-
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-  </style>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2C1A47" />
+  <title>Amarsolar — Energia Solar em Amargosa</title>
+  <meta name="description" content="Amarsolar: soluções de energia solar rápidas, de qualidade e com baixo custo. Projetos, orçamento e consultoria em Amargosa." />
+
+  <!-- Importação do Tailwind CSS via CDN - Não é necessário baixar ou configurar. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Configurações do Tailwind para customizar cores e fontes -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2C1A47',
+            accent: '#FFD700',
+            background: '#f6f7fb',
+            card: '#ffffff',
+            muted: '#6b6f76',
+          },
+          fontFamily: {
+            sans: ['Inter', 'Poppins', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <!-- Link para a fonte Inter do Google Fonts (opcional, pode ser removido) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-
-<body>
-
-  <header>
-
-    <div class="brand">
-
-      <div class="logo" aria-hidden="true">AM</div>
-
-      <div>
-
-        <div style="font-weight:700">Amarsolar</div>
-
-        <div style="font-size:12px;color:var(--muted)">Energia solar em Amargosa</div>
-
-      </div>
-
-    </div>
-
-    <nav class="nav">
-
-      <a href="#educacao">Entenda</a>
-
-      <a href="#sobre">Sobre</a>
-
-      <a href="#portfolio">Portfólio</a>
-
-      <a href="#orcamento" class="cta">Orçamento</a>
-
-    </nav>
-
-  </header>
-
-  <main class="container">
-
-    <section class="hero">
-
-      <div class="hero-card">
-
-        <h1 class="slogan">Rápido. Confiável. Econômico — Energia solar que cabe no seu bolso.</h1>
-
-        <p class="lead">Instalações residenciais e comerciais com tecnologia eficiente, redução de custos e compromisso ambiental. Transformamos sol em economia para você e sua comunidade.</p>
-
-        <div class="cta-row">
-
-          <button class="btn btn-primary" onclick="document.getElementById('orcamento').scrollIntoView({behavior:'smooth'})">Peça um orçamento</button>
-
-          <a class="btn btn-accent" href="#portfolio">Ver projetos</a>
-
-        </div>
-
-        <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
-
-          <div style="background:var(--glass);padding:10px;border-radius:10px">🚀 Entrega ágil</div>
-
-          <div style="background:var(--glass);padding:10px;border-radius:10px">✅ Qualidade certificada</div>
-
-          <div style="background:var(--glass);padding:10px;border-radius:10px">💸 Melhor custo-benefício</div>
-
-        </div>
-
-        <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
-
-          <strong style="font-size:13px;color:var(--muted)">Simulador rápido:</strong>
-
-          <input id="sim-kwh" type="number" placeholder="kWh/mês" style="width:120px;padding:8px;border-radius:8px;border:1px solid #e6e7ee">
-
-          <input id="sim-price" type="number" placeholder="R$/kWh (ex:0.80)" style="width:120px;padding:8px;border-radius:8px;border:1px solid #e6e7ee">
-
-          <button class="btn" id="sim-btn">Calcular</button>
-
-          <div id="sim-result" style="margin-left:8px;color:var(--primary);font-weight:700"></div>
-
-        </div>
-
-      </div>
-
-      <aside class="hero-card" style="background:linear-gradient(180deg,#fff,#faf8ff);text-align:center;">
-
-        <img src="https://placehold.co/1100x600/2C1A47/FFF?text=Energia+Solar+em+Amargosa" alt="Painéis solares" style="width:100%;height:220px;object-fit:cover;border-radius:10px;margin-bottom:12px">
-
-        <h3 style="margin:8px 0">Por que escolher a Amarsolar?</h3>
-
-        <p style="color:var(--muted);font-size:14px">Atendimento local, equipe técnica qualificada e soluções customizadas para reduzir sua conta de energia.</p>
-
-      </aside>
-
-    </section>
-
-    <section id="educacao" style="margin-top:32px">
-
-      <h2>Entenda a energia solar</h2>
-
-      <p style="color:var(--muted)">Respostas claras para as principais dúvidas sobre energia solar, regulamentação e funcionamento.</p>
-
-      <div class="grid" id="edu-grid">
-
-        <div class="card" data-topic="o-que-e" onclick="openTopic('o-que-e')">
-
-          <h4>O que é energia solar?</h4>
-
-          <p>Visão geral sobre geração fotovoltaica e seus benefícios.</p>
-
-        </div>
-
-        <div class="card" onclick="openTopic('como-funciona')">
-
-          <h4>Como funciona a instalação?</h4>
-
-          <p>Processo de avaliação, projeto, instalação e comissionamento.</p>
-
-        </div>
-
-        <div class="card" onclick="openTopic('economia')">
-
-          <h4>Economia na conta de luz</h4>
-
-          <p>Estimativas de redução e retorno sobre investimento (ROI).</p>
-
-        </div>
-
-        <div class="card" onclick="openTopic('aneel')">
-
-          <h4>Regulamentações (ANEEL)</h4>
-
-          <p>Informações essenciais sobre normas e conexão à rede.</p>
-
-        </div>
-
-        <div class="card" onclick="openTopic('taxacao')">
-
-          <h4>Taxação</h4>
-
-          <p>Como impostos e tarifas podem impactar o projeto.</p>
-
-        </div>
-
-        <div class="card" onclick="openTopic('falta-luz')">
-
-          <h4>Falta de luz</h4>
-
-          <p>O que acontece quando falta energia na rede e soluções com baterias.</p>
-
-        </div>
-
-      </div>
-
-      <div id="topic-modal" class="modal-backdrop">
-
-        <div class="modal-content">
-
-          <button class="close-modal">✕</button>
-
-          <div id="topic-content"></div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section id="sobre" style="margin-top:32px">
-
-      <h2>Sobre a Amarsolar</h2>
-
-      <div class="about">
-
-        <div>
-
-          <p>"A Amarsolar nasceu com o propósito de transformar a forma como as pessoas consomem energia, oferecendo soluções sustentáveis e acessíveis de energia solar. Fundada em Amargosa, nossa empresa tem raízes fortes na região e um compromisso com o desenvolvimento local, buscando sempre a inovação e a excelência. O projeto surgiu da visão de tornar a energia solar mais acessível e eficiente, aproveitando a abundância de sol que temos em nossa região. Acreditamos que a energia solar é o futuro, não só para reduzir custos, mas também para preservar o meio ambiente, e foi com essa convicção que começamos a atender clientes que, assim como nós, desejam um mundo mais sustentável."</p>
-
-          <div style="margin-top:12px" class="values">
-
-            <div class="value"><strong>Missão:</strong> Tornar a energia solar acessível e eficiente, promovendo desenvolvimento local e sustentabilidade.</div>
-
-            <div class="value"><strong>Visão:</strong> Ser referência regional em soluções solares, impulsionando a transição energética no interior do país.</div>
-
-            <div class="value"><strong>Valores:</strong> Integridade, inovação, compromisso com o cliente e responsabilidade ambiental.</div>
-
-          </div>
-
-        </div>
-
-        <aside>
-
-          <div style="background:var(--card);padding:14px;border-radius:12px;box-shadow:0 8px 26px rgba(44,26,71,0.04)">
-
-            <h4>Contato rápido</h4>
-
-            <p style="color:var(--muted);font-size:14px">Telefone: (75) 99984-2449<br>Email: contato@amarsolar.com.br</p>
-
-            <div style="margin-top:12px"><a id="quick-wa" class="btn btn-primary" href="#">Solicitar orçamento</a></div>
-
-          </div>
-
-        </aside>
-
-      </div>
-
-    </section>
-
-    <section id="portfolio" style="margin-top:32px">
-
-      <h2>Portfólio</h2>
-
-      <p style="color:var(--muted)">Projetos realizados pela Amarsolar. Clique para ampliar e ver detalhes.</p>
-
-      <div class="gallery">
-
-        <img src="https://placehold.co/400x300/10B981/FFF?text=Projeto+Residencial" alt="Projeto Residencial em Amargosa" onclick="openPortfolio({src:'https://placehold.co/400x300/10B981/FFF?text=Projeto+Residencial', title:'Projeto Residencial', desc:'Instalação de 15 painéis de 450W em telhado de cerâmica, resultando em 95% de redução na conta de energia para uma família de 4 pessoas.'})">
-
-        <img src="https://placehold.co/400x300/FACC15/FFF?text=Projeto+Comercial" alt="Projeto Comercial - Loja de Roupas" onclick="openPortfolio({src:'https://placehold.co/400x300/FACC15/FFF?text=Projeto+Comercial', title:'Projeto Comercial', desc:'Sistema de 50 painéis para uma loja de varejo, cobrindo todo o consumo e eliminando os custos de eletricidade. O projeto incluiu sistemas de monitoramento em tempo real.'})">
-
-        <img src="https://placehold.co/400x300/3B82F6/FFF?text=Projeto+Industrial" alt="Projeto Industrial - Fábrica" onclick="openPortfolio({src:'https://placehold.co/400x300/3B82F6/FFF?text=Projeto+Industrial', title:'Projeto Industrial', desc:'Desenvolvimento de uma usina solar de grande escala para uma fábrica local, gerando créditos de energia para a matriz e reduzindo drasticamente os custos operacionais.'})">
-
-      </div>
-
-      <div style="margin-top:18px">
-
-        <h4>Parcerias</h4>
-
-        <p style="color:var(--muted)">Exibimos abaixo os logos das empresas parceiras.</p>
-
-        <div style="display:flex;gap:12px;margin-top:8px;align-items:center">
-
-          <img src="https://placehold.co/150x80/E2E8F0/64748B?text=Parceiro+1" alt="Parceiro 1" style="height:44px;object-fit:contain">
-
-          <img src="https://placehold.co/150x80/E2E8F0/64748B?text=Parceiro+2" alt="Parceiro 2" style="height:44px;object-fit:contain">
-
-          <img src="https://placehold.co/150x80/E2E8F0/64748B?text=Parceiro+3" alt="Parceiro 3" style="height:44px;object-fit:contain">
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section id="orcamento" style="margin-top:32px">
-
-      <h2>Contato & Orçamento</h2>
-
-      <p style="color:var(--muted)">Preencha o formulário e nossa equipe entrará em contato.</p>
-
-      <form id="contact-form" action="" onsubmit="handleForm(event)">
-
-        <input type="text" id="name" name="name" placeholder="Nome *" required>
-
-        <input type="tel" id="phone" name="phone" placeholder="Telefone *" required>
-
-        <select id="projectType" name="projectType" required>
-
-          <option value="">Tipo de projeto*</option>
-
-          <option>Residencial</option>
-
-          <option>Comercial</option>
-
-          <option>Industrial</option>
-
-          <option>Outro</option>
-
-        </select>
-
-        <input type="number" id="consumption" name="consumption" placeholder="Consumo (kWh/mês) *" required>
-
-        <textarea id="message" name="message" placeholder="Mensagem"></textarea>
-
-        <div style="display:flex;gap:10px;align-items:center">
-
-          <button class="btn btn-primary" type="submit">Enviar</button>
-
-          <div id="form-status" style="color:var(--muted)"></div>
-
-        </div>
-
-      </form>
-
-    </section>
-
-    <section style="margin-top:32px">
-
-      <h2>O que nossos clientes dizem</h2>
-
-      <div class="testimonials" id="testimonials">
-
-        <div class="testimonial">"Excelente serviço e redução real na conta de energia." — Maria, Amargosa</div>
-
-        <div class="testimonial">"Equipe rápida e atenciosa. Recomendo." — João, Itaquara</div>
-
-        <div class="testimonial">"Projeto comercial que otimizou nossos custos." — Mercado Amargosa</div>
-
-        <div class="testimonial">"Um investimento que valeu a pena em todos os sentidos." — Carlos, Amargosa</div>
-
-        <div class="testimonial">"Atendimento impecável e solução que superou as expectativas." — Valdir, Amargosa</div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <footer>
-
-    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-
-      <div>
-
-        <strong>Amarsolar</strong><br>
-
-        <small style="color:var(--muted)">Energia solar em Amargosa — compromisso com o futuro.</small>
-
-      </div>
-
-      <div style="display:flex;gap:12px;align-items:center">
-
-        <a href="#">Instagram</a>
-
-      </div>
-
-    </div>
-
-  </footer>
-
-  <div id="lightbox" class="modal-backdrop">
-
-    <div class="modal-content" style="max-width:900px">
-
-      <button class="close-modal">✕</button>
-
-      <img id="lightbox-img" src="" alt="Ampliação" style="max-width:100%;max-height:60vh;border-radius:10px;object-fit:contain">
-
-      <div id="lightbox-details" style="margin-top:12px">
-
-        <h4 id="lightbox-title" style="margin:0"></h4>
-
-        <p id="lightbox-desc" style="color:var(--muted);font-size:14px;margin:5px 0 0"></p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <a id="whatsapp-btn" class="whatsapp" href="#" target="_blank" aria-label="WhatsApp">
-
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="white"><path d="M380.9 97.1C339.4 55.4 283.6 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L1 448l107.9-30.5c34.7 19.3 74.3 29.5 114.7 29.5 122.4 0 222-99.6 222-222 0-38.3-10.9-70.3-30.8-101.4zM223.9 417.8c-26.6 0-53.1-9.9-75.6-29.8 0 0-1.2-1-1.2-1.2l-32.8-9.1-33.5 98.2 99.4-31.5c21.8 11.6 46.1 17.7 70.8 17.7 93.9 0 170.8-76.1 170.8-170.1 0-82-62.8-150.3-144-162.5zm-55-121.7l-4.4-2.5c-3.7-2.1-7.8-3.2-11.9-3.2s-8.1 1.1-11.8 3.2c-3.7 2.1-7.1 5.3-10.2 9.4-3.1 4.1-5.6 9-7.5 14.8-1.8 5.8-2.6 12.1-2.6 18.2s.8 12.4 2.6 18.2c1.9 5.8 4.4 10.7 7.5 14.8 3.1 4.1 6.5 7.3 10.2 9.4s7.8 3.2 11.8 3.2c4.1 0 8.2-1.1 11.9-3.2l4.4-2.5c3.7-2.1 7.1-5.3 10.2-9.4 3.1-4.1 5.6-9 7.5-14.8 1.8-5.8 2.6-12.1 2.6-18.2s-.8-12.4-2.6-18.2c-1.9-5.8-4.4-10.7-7.5-14.8-3.1-4.1-6.5-7.3-10.2-9.4z"/></svg>
-
-    <span>Fale conosco</span>
-
-  </a>
-
-  <div class="chatbot-btn" id="chatbot-btn">
-
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white"><path d="M495.6 20.2c-15.6-20.9-40.4-31.3-66.8-29.4-44.1 3.2-87.1 27.6-116.1 62.4-28.7 34.4-44.5 76.5-44.5 119.5s15.8 85.1 44.5 119.5c29 34.8 72 59.2 116.1 62.4 26.4 1.9 51.2-8.5 66.8-29.4 20.3-27.4 31.9-61.9 31.9-98.1s-11.6-70.7-31.9-98.1zM116.4 492.3c-15.6 20.9-40.4 31.3-66.8 29.4-44.1-3.2-87.1-27.6-116.1-62.4-28.7-34.4-44.5-76.5-44.5-119.5s15.8-85.1 44.5-119.5c29-34.8 72-59.2 116.1-62.4 26.4-1.9 51.2 8.5 66.8 29.4 20.3 27.4 31.9 61.9 31.9 98.1s-11.6 70.7-31.9 98.1z"/></svg>
-
-  </div>
-
-  <div class="chatbot-modal" id="chatbot-modal">
-
-    <div class="chatbot-header">
-
-      <span>Chatbot Amarsolar</span>
-
-      <button class="close-modal">✕</button>
-
-    </div>
-
-    <div class="chatbot-body" id="chat-body"></div>
-
-    <div class="chatbot-input-container">
-
-      <input type="text" class="chatbot-input" id="chat-input" placeholder="Digite sua mensagem...">
-
-      <button class="chatbot-send" id="chat-send">▶</button>
-
-    </div>
-
-  </div>
-
-  <script>
-
-    const WHATSAPP_NUMBER = '5575999842449';
-
-    const EMAIL_RECEIVER = 'mauriciosantana408@gmail.com';
-
-    const GOOGLE_FORM_ACTION = ''; // COLOQUE A URL AQUI!
-
-    const GOOGLE_FORM_FIELD_MAPPING = {
-
-      'name': 'entry.123456789',
-
-      'phone': 'entry.987654321',
-
-      'projectType': 'entry.1122334455',
-
-      'consumption': 'entry.5544332211',
-
-      'message': 'entry.9988776655'
-
-    };
-
-    function on(el, evt, handler){if(!el)return;if(typeof el.addEventListener==='function')return el.addEventListener(evt,handler);if(typeof el.attachEvent==='function')return el.attachEvent('on'+evt,handler);el['on'+evt]=handler;}
-
-    document.addEventListener('DOMContentLoaded',function(){
-
-      const waBtn=document.getElementById('whatsapp-btn'),quickWa=document.getElementById('quick-wa'),DEFAULT_WA_MESSAGE='Olá! Gostaria de um orçamento de energia solar para minha residência.';if(WHATSAPP_NUMBER&&WHATSAPP_NUMBER.trim()!==''){const waBase=`https://wa.me/${WHATSAPP_NUMBER}`;const waUrl=`${waBase}?text=${encodeURIComponent(DEFAULT_WA_MESSAGE)}`;if(waBtn)waBtn.href=waUrl;if(quickWa)quickWa.href=waUrl;}else{if(waBtn)waBtn.style.display='none';if(quickWa)quickWa.style.display='none';}
-
-      const simBtn=document.getElementById('sim-btn');function calcSimInternal(){const kwh=Number(document.getElementById('sim-kwh').value)||0;const price=Number(document.getElementById('sim-price').value)||0.8;const out=document.getElementById('sim-result');if(kwh<=0){if(out)out.textContent='Informe kWh/mês';return}
-
-      const monthlyCost=kwh*price;const estimatedReduction=monthlyCost*0.8;const monthlySaving=estimatedReduction;const yearlySaving=monthlySaving*12;if(out)out.textContent=`Economia aprox.: R$ ${monthlySaving.toFixed(2)}/mês — R$ ${yearlySaving.toFixed(2)}/ano`;}
-
-      if(simBtn)on(simBtn,'click',calcSimInternal);window.calcSim=calcSimInternal;
-
-      const topicModal=document.getElementById('topic-modal'),topicContent=document.getElementById('topic-content'),closeBtns=document.querySelectorAll('.close-modal');const topics={'o-que-e':'<h3>O que é energia solar?</h3><p>A energia solar fotovoltaica converte luz do sol em eletricidade através de painéis solares. É limpa, renovável e reduz a dependência de combustíveis fósseis.</p>','como-funciona':'<h3>Como funciona a instalação?</h3><p>Primeiro fazemos um estudo de viabilidade, depois projetamos o sistema, instalamos os painéis e o inversor, e comissionamos para conectar à rede elétrica.</p>','economia':'<h3>Economia na conta de luz</h3><p>Sistemas bem projetados podem reduzir significativamente a conta. O ROI depende do consumo, tarifa e do investimento inicial.</p>','aneel':'<h3>Regulamentações (ANEEL)</h3><p>A ANEEL regulamenta o sistema de compensação de energia (net metering). É importante seguir normas para conexão à rede.</p>','taxacao':'<h3>Taxação</h3><p>Tributos e tarifas variam; consideramos impostos locais e custos de instalação no orçamento.</p>','falta-luz':'<h3>Falta de luz</h3><p>Sem baterias, sistemas conectados à rede não funcionam em queda da rede por segurança. Oferecemos soluções com armazenamento para continuidade.</p>'};
-
-      function openTopicInternal(key){if(topicContent)topicContent.innerHTML=topics[key]||'<p>Conteúdo em desenvolvimento.</p>';if(topicModal)topicModal.classList.add('active');}
-
-      function closeModals(){const modals=document.querySelectorAll('.modal-backdrop.active');modals.forEach(m=>m.classList.remove('active'));}
-
-      if(closeBtns)closeBtns.forEach(btn=>on(btn,'click',closeModals));window.openTopic=openTopicInternal;window.closeModals=closeModals;
-
-      const portfolioModal=document.getElementById('lightbox'),portfolioImg=document.getElementById('lightbox-img'),portfolioTitle=document.getElementById('lightbox-title'),portfolioDesc=document.getElementById('lightbox-desc');function openPortfolio(data){if(portfolioImg)portfolioImg.src=data.src;if(portfolioTitle)portfolioTitle.textContent=data.title;if(portfolioDesc)portfolioDesc.textContent=data.desc;if(portfolioModal)portfolioModal.classList.add('active');}
-
-      window.openPortfolio=openPortfolio;
-
-      const cont=document.getElementById('testimonials');if(cont){setInterval(()=>{const maxScroll=cont.scrollWidth-cont.clientWidth;if(maxScroll<=0)return;if(cont.scrollLeft+cont.clientWidth>=cont.scrollWidth)cont.scrollLeft=0;else{try{cont.scrollBy({left:310,behavior:'smooth'});}catch(e){cont.scrollLeft+=310;}}},3500);}
-
-      const form=document.getElementById('contact-form'),statusDiv=document.getElementById('form-status');function isValidPhone(p){const regex=/^\(?[1-9]{2}\)?\s?9?\d{4}-?\d{4}$/;return regex.test(p);}
-
-      function handleFormInternal(e){e&&e.preventDefault();const name=document.getElementById('name').value;const phone=document.getElementById('phone').value;const type=document.getElementById('projectType').value;const consumption=document.getElementById('consumption').value;if(!name||!phone||!type||!consumption){statusDiv.textContent='Por favor, preencha todos os campos obrigatórios.';statusDiv.style.color='red';return;}
-
-      if(!isValidPhone(phone)){statusDiv.textContent='Telefone inválido.';statusDiv.style.color='red';return;}
-
-      statusDiv.textContent='Enviando...';statusDiv.style.color='#6b6f76';
-
-      const formData=new FormData();formData.append(GOOGLE_FORM_FIELD_MAPPING.name,name);formData.append(GOOGLE_FORM_FIELD_MAPPING.phone,phone);formData.append(GOOGLE_FORM_FIELD_MAPPING.projectType,type);formData.append(GOOGLE_FORM_FIELD_MAPPING.consumption,consumption);if(GOOGLE_FORM_ACTION&&GOOGLE_FORM_ACTION.trim()!==''){fetch(GOOGLE_FORM_ACTION,{method:'POST',mode:'no-cors',body:formData}).then(()=>{statusDiv.textContent='Enviado! Entraremos em contato em breve.';statusDiv.style.color='#6b6f76';
-
- form.reset();}).catch(err=>{statusDiv.textContent='Erro ao enviar. Tente novamente ou use o WhatsApp.';statusDiv.style.color='red';});}
-
-      else{const waMessage=`Olá! Gostaria de um orçamento de energia solar.\nNome: ${name}\nTelefone: ${phone}\nTipo: ${type}\nConsumo(kWh/mês): ${consumption}`;const waUrl=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;window.open(waUrl,'_blank');statusDiv.textContent='Redirecionando para o WhatsApp...';}}
-
-      window.handleForm=handleFormInternal;
-
-      const anchors=document.querySelectorAll('a[href^="#"]');if(anchors&&anchors.length){Array.prototype.forEach.call(anchors,function(a){on(a,'click',function(e){if(a.getAttribute('href')==='#')return;e&&e.preventDefault();const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)try{el.scrollIntoView({behavior:'smooth'});}catch(err){el.scrollIntoView();}});});}
-
-      const chatbotBtn=document.getElementById('chatbot-btn'),chatbotModal=document.getElementById('chatbot-modal'),chatBody=document.getElementById('chat-body'),chatInput=document.getElementById('chat-input'),chatSend=document.getElementById('chat-send');let chatState='initial';function addMessage(text,sender){const msg=document.createElement('div');msg.classList.add('chat-message',`chat-${sender}`);msg.textContent=text;chatBody.appendChild(msg);chatBody.scrollTop=chatBody.scrollHeight;}
-
-      function processChat(message){switch(chatState){case'initial':addMessage('Olá! Sou o assistente virtual da Amarsolar. Qual o seu nome?','bot');chatState='askName';break;case'askName':addMessage('Olá, '+message+'. Prazer! Qual é o seu consumo médio mensal de energia (em kWh)?','bot');chatState='askConsumption';break;case'askConsumption':addMessage('Perfeito! Para finalizarmos, digite seu telefone para contato.','bot');chatState='askPhone';break;case'askPhone':addMessage('Obrigado! Entraremos em contato em breve. Você pode agora preencher o formulário completo.','bot');chatState='final';break;default:addMessage('Desculpe, não entendi.','bot');break;}}
-
-      on(chatbotBtn,'click',()=>chatbotModal.classList.toggle('active'));on(chatSend,'click',()=>handleChatInput());on(chatInput,'keydown',e=>{if(e.key==='Enter')handleChatInput();});function handleChatInput(){const input=chatInput.value.trim();if(input==='')return;addMessage(input,'user');chatInput.value='';processChat(input);}
-
-      processChat('');
-
-    });
-
-  </script>
-
+<body class="bg-gradient-to-b from-gray-50 to-indigo-100 font-sans text-primary">
+
+  <!-- ======================== Header e Navegação ======================== -->
+  <header class="sticky top-0 z-50 flex flex-col items-center justify-between p-4 bg-white/70 backdrop-blur-lg shadow-md lg:flex-row lg:px-8">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-[#3b2a6a] flex items-center justify-center text-white font-bold text-lg" aria-hidden="true">AM</div>
+      <div>
+        <div class="font-bold text-lg">Amarsolar</div>
+        <div class="text-sm text-muted">Energia solar em Amargosa</div>
+      </div>
+    </div>
+    <nav class="flex flex-wrap justify-center gap-2 mt-4 lg:mt-0 lg:gap-4">
+      <a href="#educacao" class="px-3 py-2 rounded-lg font-semibold transition-colors hover:text-accent">Entenda</a>
+      <a href="#sobre" class="px-3 py-2 rounded-lg font-semibold transition-colors hover:text-accent">Sobre</a>
+      <a href="#portfolio" class="px-3 py-2 rounded-lg font-semibold transition-colors hover:text-accent">Portfólio</a>
+      <a href="#orcamento" class="px-3 py-2 rounded-lg font-semibold transition-all bg-accent text-primary hover:bg-[#ffea61] hover:shadow-lg">Orçamento</a>
+    </nav>
+  </header>
+
+  <main class="container mx-auto p-4 max-w-7xl">
+    
+    <!-- ======================== Seção Principal (Hero) ======================== -->
+    <section class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8 mt-8 lg:mt-12 animate-fade-in-up">
+      <div class="bg-white p-6 rounded-3xl shadow-lg lg:p-10">
+        <h1 class="text-3xl font-bold lg:text-5xl leading-tight">Rápido. Confiável. Econômico — Energia solar que cabe no seu bolso.</h1>
+        <p class="text-muted mt-4 text-lg lg:text-xl">Instalações residenciais e comerciais com tecnologia eficiente, redução de custos e compromisso ambiental. Transformamos sol em economia para você e sua comunidade.</p>
+        <div class="flex flex-wrap gap-3 mt-6">
+          <button class="px-6 py-3 rounded-lg font-bold bg-primary text-white transition-all hover:-translate-y-1 hover:shadow-xl" onclick="document.getElementById('orcamento').scrollIntoView({behavior:'smooth'})">Peça um orçamento</button>
+          <a href="#portfolio" class="px-6 py-3 rounded-lg font-bold bg-accent text-primary transition-all hover:-translate-y-1 hover:shadow-xl">Ver projetos</a>
+        </div>
+        <div class="flex flex-wrap gap-2 mt-6 lg:mt-8 text-sm lg:text-base">
+          <div class="bg-gray-100 px-3 py-2 rounded-lg shadow-sm">🚀 Entrega ágil</div>
+          <div class="bg-gray-100 px-3 py-2 rounded-lg shadow-sm">✅ Qualidade certificada</div>
+          <div class="bg-gray-100 px-3 py-2 rounded-lg shadow-sm">💸 Melhor custo-benefício</div>
+        </div>
+        
+        <!-- Simulador Rápido -->
+        <div class="mt-6 lg:mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <strong class="text-sm text-muted">Simulador rápido:</strong>
+          <div class="flex flex-col sm:flex-row gap-3 mt-2 items-center">
+            <input id="sim-kwh" type="number" placeholder="kWh/mês" class="flex-1 p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+            <input id="sim-price" type="number" placeholder="R$/kWh (ex: 0.80)" class="flex-1 p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+            <button class="px-4 py-2 rounded-lg font-bold bg-primary text-white transition-all hover:bg-opacity-90" id="sim-btn">Calcular</button>
+          </div>
+          <div id="sim-result" class="mt-3 text-primary font-bold"></div>
+        </div>
+      </div>
+      
+      <!-- Cartão de Destaque na Seção Hero -->
+      <aside class="bg-white p-6 rounded-3xl shadow-lg flex flex-col justify-between items-center text-center">
+        <img src="https://placehold.co/800x600/2C1A47/FFF?text=Energia+Solar+em+Amargosa" alt="Painéis solares" class="w-full h-auto max-h-80 object-cover rounded-2xl mb-4">
+        <h3 class="text-xl font-bold">Por que escolher a Amarsolar?</h3>
+        <p class="text-muted mt-2">Atendimento local, equipe técnica qualificada e soluções customizadas para reduzir sua conta de energia.</p>
+      </aside>
+    </section>
+
+    <!-- ======================== Seção Entenda a Energia Solar ======================== -->
+    <section id="educacao" class="mt-12 lg:mt-16">
+      <h2 class="text-2xl font-bold lg:text-3xl">Entenda a energia solar</h2>
+      <p class="text-muted mt-2">Respostas claras para as principais dúvidas sobre energia solar, regulamentação e funcionamento.</p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+        <div class="bg-white p-5 rounded-xl shadow-md cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg" data-topic="o-que-e" onclick="openTopic('o-que-e')">
+          <h4 class="font-bold">O que é energia solar?</h4>
+          <p class="text-sm text-muted">Visão geral sobre geração fotovoltaica e seus benefícios.</p>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-md cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg" data-topic="como-funciona" onclick="openTopic('como-funciona')">
+          <h4 class="font-bold">Como funciona a instalação?</h4>
+          <p class="text-sm text-muted">Processo de avaliação, projeto, instalação e comissionamento.</p>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-md cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg" data-topic="economia" onclick="openTopic('economia')">
+          <h4 class="font-bold">Economia na conta de luz</h4>
+          <p class="text-sm text-muted">Estimativas de redução e retorno sobre investimento (ROI).</p>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-md cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg" data-topic="aneel" onclick="openTopic('aneel')">
+          <h4 class="font-bold">Regulamentações (ANEEL)</h4>
+          <p class="text-sm text-muted">Informações essenciais sobre normas e conexão à rede.</p>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-md cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg" data-topic="taxacao" onclick="openTopic('taxacao')">
+          <h4 class="font-bold">Taxação</h4>
+          <p class="text-sm text-muted">Como impostos e tarifas podem impactar o projeto.</p>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-md cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg" data-topic="falta-luz" onclick="openTopic('falta-luz')">
+          <h4 class="font-bold">Falta de luz</h4>
+          <p class="text-sm text-muted">O que acontece quando falta energia na rede e soluções com baterias.</p>
+        </div>
+      </div>
+      
+      <!-- Modal para os Tópicos de Educação -->
+      <dialog id="topic-modal" class="p-6 rounded-2xl shadow-2xl backdrop:bg-black/50 w-full max-w-xl">
+        <button class="absolute top-4 right-4 text-xl text-gray-400 hover:text-gray-600 transition-colors" onclick="closeModals()">✕</button>
+        <div id="topic-content" class="pt-4"></div>
+      </dialog>
+    </section>
+
+    <!-- ======================== Seção Sobre a Amarsolar ======================== -->
+    <section id="sobre" class="mt-12 lg:mt-16">
+      <h2 class="text-2xl font-bold lg:text-3xl">Sobre a Amarsolar</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <div>
+          <p>"A Amarsolar nasceu com o propósito de transformar a forma como as pessoas consomem energia, oferecendo soluções sustentáveis e acessíveis de energia solar. Fundada em Amargosa, nossa empresa tem raízes fortes na região e um compromisso com o desenvolvimento local, buscando sempre a inovação e a excelência. O projeto surgiu da visão de tornar a energia solar mais acessível e eficiente, aproveitando a abundância de sol que temos em nossa região. Acreditamos que a energia solar é o futuro, não só para reduzir custos, mas também para preservar o meio ambiente, e foi com essa convicção que começamos a atender clientes que, assim como nós, desejam um mundo mais sustentável."</p>
+          <div class="flex flex-col gap-3 mt-4">
+            <div class="p-4 rounded-xl shadow-sm border border-gray-200">
+              <strong class="font-semibold">Missão:</strong> Tornar a energia solar acessível e eficiente, promovendo desenvolvimento local e sustentabilidade.
+            </div>
+            <div class="p-4 rounded-xl shadow-sm border border-gray-200">
+              <strong class="font-semibold">Visão:</strong> Ser referência regional em soluções solares, impulsionando a transição energética no interior do país.
+            </div>
+            <div class="p-4 rounded-xl shadow-sm border border-gray-200">
+              <strong class="font-semibold">Valores:</strong> Integridade, inovação, compromisso com o cliente e responsabilidade ambiental.
+            </div>
+          </div>
+        </div>
+        <aside class="flex flex-col gap-6">
+          <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+            <h4 class="font-bold text-lg">Contato rápido</h4>
+            <p class="text-sm text-muted mt-2">Telefone: (75) 99984-2449<br>Email: contato@amarsolar.com.br</p>
+            <a id="quick-wa" class="mt-4 inline-block px-6 py-3 rounded-lg font-bold bg-primary text-white transition-all hover:bg-opacity-90" href="#">Solicitar orçamento</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ======================== Seção Portfólio ======================== -->
+    <section id="portfolio" class="mt-12 lg:mt-16">
+      <h2 class="text-2xl font-bold lg:text-3xl">Portfólio</h2>
+      <p class="text-muted mt-2">Projetos realizados pela Amarsolar. Clique para ampliar e ver detalhes.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        <img src="https://placehold.co/600x400/10B981/FFF?text=Projeto+Residencial" alt="Projeto Residencial" class="w-full h-56 object-cover rounded-xl shadow-md cursor-pointer transition-transform hover:scale-105" onclick="openPortfolio({src:'https://placehold.co/600x400/10B981/FFF?text=Projeto+Residencial', title:'Projeto Residencial', desc:'Instalação de 15 painéis de 450W em telhado de cerâmica, resultando em 95% de redução na conta de energia para uma família de 4 pessoas.'})">
+        <img src="https://placehold.co/600x400/FACC15/FFF?text=Projeto+Comercial" alt="Projeto Comercial" class="w-full h-56 object-cover rounded-xl shadow-md cursor-pointer transition-transform hover:scale-105" onclick="openPortfolio({src:'https://placehold.co/600x400/FACC15/FFF?text=Projeto+Comercial', title:'Projeto Comercial', desc:'Sistema de 50 painéis para uma loja de varejo, cobrindo todo o consumo e eliminando os custos de eletricidade. O projeto incluiu sistemas de monitoramento em tempo real.'})">
+        <img src="https://placehold.co/600x400/3B82F6/FFF?text=Projeto+Industrial" alt="Projeto Industrial" class="w-full h-56 object-cover rounded-xl shadow-md cursor-pointer transition-transform hover:scale-105" onclick="openPortfolio({src:'https://placehold.co/600x400/3B82F6/FFF?text=Projeto+Industrial', title:'Projeto Industrial', desc:'Desenvolvimento de uma usina solar de grande escala para uma fábrica local, gerando créditos de energia para a matriz e reduzindo drasticamente os custos operacionais.'})">
+      </div>
+      
+      <!-- Modal para o Portfólio (Lightbox) -->
+      <dialog id="portfolio-modal" class="p-6 rounded-2xl shadow-2xl backdrop:bg-black/50 w-full max-w-4xl">
+        <button class="absolute top-4 right-4 text-xl text-gray-400 hover:text-gray-600 transition-colors" onclick="closeModals()">✕</button>
+        <div class="flex flex-col lg:flex-row items-center gap-6">
+          <img id="portfolio-img" src="" alt="Ampliação do projeto" class="w-full h-auto max-h-[60vh] object-contain rounded-xl">
+          <div class="w-full">
+            <h4 id="portfolio-title" class="text-2xl font-bold mb-2"></h4>
+            <p id="portfolio-desc" class="text-muted"></p>
+          </div>
+        </div>
+      </dialog>
+    </section>
+
+    <!-- ======================== Seção de Contato e Orçamento ======================== -->
+    <section id="orcamento" class="mt-12 lg:mt-16">
+      <h2 class="text-2xl font-bold lg:text-3xl">Contato & Orçamento</h2>
+      <p class="text-muted mt-2">Preencha o formulário e nossa equipe entrará em contato.</p>
+      
+      <form id="contact-form" class="grid gap-4 mt-6 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <input type="text" id="name" name="name" placeholder="Nome *" required class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+        <input type="tel" id="phone" name="phone" placeholder="Telefone *" required class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+        <select id="projectType" name="projectType" required class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+          <option value="">Tipo de projeto*</option>
+          <option>Residencial</option>
+          <option>Comercial</option>
+          <option>Industrial</option>
+          <option>Outro</option>
+        </select>
+        <input type="number" id="consumption" name="consumption" placeholder="Consumo (kWh/mês) *" required class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+        <textarea id="message" name="message" placeholder="Mensagem" rows="4" class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition-colors"></textarea>
+        
+        <div class="flex items-center gap-4 mt-2">
+          <button type="submit" class="px-6 py-3 rounded-lg font-bold bg-primary text-white transition-all hover:-translate-y-1 hover:shadow-xl">Enviar</button>
+          <div id="form-status" class="text-sm text-muted"></div>
+        </div>
+      </form>
+    </section>
+
+    <!-- ======================== Seção de Depoimentos ======================== -->
+    <section class="mt-12 lg:mt-16">
+      <h2 class="text-2xl font-bold lg:text-3xl">O que nossos clientes dizem</h2>
+      <div id="testimonials" class="flex overflow-x-auto gap-4 mt-6 pb-4 snap-x snap-mandatory scroll-smooth">
+        <div class="flex-shrink-0 w-80 p-5 rounded-xl shadow-md bg-white border border-gray-100 snap-start">
+          "Excelente serviço e redução real na conta de energia." — Maria, Amargosa
+        </div>
+        <div class="flex-shrink-0 w-80 p-5 rounded-xl shadow-md bg-white border border-gray-100 snap-start">
+          "Equipe rápida e atenciosa. Recomendo." — João, Itaquara
+        </div>
+        <div class="flex-shrink-0 w-80 p-5 rounded-xl shadow-md bg-white border border-gray-100 snap-start">
+          "Projeto comercial que otimizou nossos custos." — Mercado Amargosa
+        </div>
+        <div class="flex-shrink-0 w-80 p-5 rounded-xl shadow-md bg-white border border-gray-100 snap-start">
+          "Um investimento que valeu a pena em todos os sentidos." — Carlos, Amargosa
+        </div>
+        <div class="flex-shrink-0 w-80 p-5 rounded-xl shadow-md bg-white border border-gray-100 snap-start">
+          "Atendimento impecável e solução que superou as expectativas." — Valdir, Amargosa
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================== Rodapé ======================== -->
+  <footer class="mt-12 lg:mt-16 py-6 border-t border-gray-200 bg-white shadow-inner">
+    <div class="container mx-auto px-4 max-w-7xl flex flex-col md:flex-row justify-between items-center gap-4">
+      <div>
+        <strong class="text-lg">Amarsolar</strong>
+        <p class="text-sm text-muted">Energia solar em Amargosa — compromisso com o futuro.</p>
+      </div>
+      <div class="flex gap-4">
+        <a href="#" class="text-primary hover:text-accent transition-colors">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================== Botões Flutuantes e Modais ======================== -->
+  <!-- Botão flutuante do WhatsApp -->
+  <a id="whatsapp-btn" class="fixed bottom-4 right-4 flex items-center gap-2 p-3 rounded-full bg-green-500 text-white shadow-xl transition-transform hover:scale-110 z-50" href="#" target="_blank" aria-label="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" class="w-6 h-6"><path d="M380.9 97.1C339.4 55.4 283.6 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L1 448l107.9-30.5c34.7 19.3 74.3 29.5 114.7 29.5 122.4 0 222-99.6 222-222 0-38.3-10.9-70.3-30.8-101.4zM223.9 417.8c-26.6 0-53.1-9.9-75.6-29.8 0 0-1.2-1-1.2-1.2l-32.8-9.1-33.5 98.2 99.4-31.5c21.8 11.6 46.1 17.7 70.8 17.7 93.9 0 170.8-76.1 170.8-170.1 0-82-62.8-150.3-144-162.5zm-55-121.7l-4.4-2.5c-3.7-2.1-7.8-3.2-11.9-3.2s-8.1 1.1-11.8 3.2c-3.7 2.1-7.1 5.3-10.2 9.4-3.1 4.1-5.6 9-7.5 14.8-1.8 5.8-2.6 12.1-2.6 18.2s.8 12.4 2.6 18.2c1.9 5.8 4.4 10.7 7.5 14.8 3.1 4.1 6.5 7.3 10.2 9.4s7.8 3.2 11.8 3.2c4.1 0 8.2-1.1 11.9-3.2l4.4-2.5c3.7-2.1 7.1-5.3 10.2-9.4 3.1-4.1 5.6-9 7.5-14.8 1.8-5.8 2.6-12.1 2.6-18.2s-.8-12.4-2.6-18.2c-1.9-5.8-4.4-10.7-7.5-14.8-3.1-4.1-6.5-7.3-10.2-9.4z"/></svg>
+    <span class="hidden md:inline">Fale conosco</span>
+  </a>
+
+  <!-- Botão flutuante do Chatbot -->
+  <div class="fixed bottom-20 right-4 p-3 rounded-full bg-primary text-white shadow-xl cursor-pointer transition-transform hover:scale-110 z-50" id="chatbot-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class="w-6 h-6"><path d="M495.6 20.2c-15.6-20.9-40.4-31.3-66.8-29.4-44.1 3.2-87.1 27.6-116.1 62.4-28.7 34.4-44.5 76.5-44.5 119.5s15.8 85.1 44.5 119.5c29 34.8 72 59.2 116.1 62.4 26.4 1.9 51.2-8.5 66.8-29.4 20.3-27.4 31.9-61.9 31.9-98.1s-11.6-70.7-31.9-98.1zM116.4 492.3c-15.6 20.9-40.4 31.3-66.8 29.4-44.1-3.2-87.1-27.6-116.1-62.4-28.7-34.4-44.5-76.5-44.5-119.5s15.8-85.1 44.5-119.5c29-34.8 72-59.2 116.1-62.4 26.4-1.9 51.2 8.5 66.8 29.4 20.3 27.4 31.9 61.9 31.9 98.1s-11.6 70.7-31.9 98.1z"/></svg>
+  </div>
+  
+  <!-- Modal do Chatbot -->
+  <div id="chatbot-modal" class="hidden fixed bottom-24 right-4 w-80 h-[28rem] rounded-xl shadow-2xl flex flex-col z-50 transform scale-95 opacity-0 transition-all duration-300 ease-out-circ">
+    <div class="bg-primary text-white p-4 rounded-t-xl flex justify-between items-center">
+      <span>Chatbot Amarsolar</span>
+      <button class="text-white hover:text-gray-300" onclick="hideChatbot()">✕</button>
+    </div>
+    <div id="chat-body" class="flex-1 p-4 overflow-y-auto bg-white flex flex-col gap-2"></div>
+    <div class="p-4 bg-gray-50 border-t border-gray-200 flex gap-2">
+      <input type="text" id="chat-input" placeholder="Digite sua mensagem..." class="flex-1 p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-primary">
+      <button id="chat-send" class="p-2 rounded-lg bg-primary text-white hover:bg-opacity-90">▶</button>
+    </div>
+  </div>
+
+  <!-- ======================== Script JavaScript ======================== -->
+  <script>
+    // Configurações e Mapeamento de Dados
+    const WHATSAPP_NUMBER = '5575999842449'; // Coloque seu número aqui
+    
+    // Conteúdos para os modais da seção "Entenda"
+    const topics = {
+      'o-que-e': {
+        title: 'O que é energia solar?',
+        content: 'A energia solar fotovoltaica converte luz do sol em eletricidade através de painéis solares. É uma fonte de energia limpa, renovável e reduz a dependência de combustíveis fósseis.'
+      },
+      'como-funciona': {
+        title: 'Como funciona a instalação?',
+        content: 'O processo começa com um estudo de viabilidade e um projeto customizado. Em seguida, instalamos os painéis e o inversor e, por fim, conectamos o sistema à rede elétrica.'
+      },
+      'economia': {
+        title: 'Economia na conta de luz',
+        content: 'Um sistema bem projetado pode reduzir sua conta de energia em até 95%. O retorno sobre o investimento (ROI) é rápido e o sistema se paga em poucos anos.'
+      },
+      'aneel': {
+        title: 'Regulamentações (ANEEL)',
+        content: 'A ANEEL regulamenta o sistema de compensação de energia (net metering), permitindo que você use créditos de energia gerados em momentos de alta produção. É essencial seguir as normas para a conexão segura à rede.'
+      },
+      'taxacao': {
+        title: 'Taxação',
+        content: 'Tributos e tarifas de uso da rede elétrica variam conforme a região. Consideramos todos esses custos para garantir que seu orçamento seja preciso e completo.'
+      },
+      'falta-luz': {
+        title: 'Falta de luz',
+        content: 'Por segurança, sistemas solares conectados à rede são desligados automaticamente em caso de queda de energia. Para ter eletricidade durante um apagão, é necessário um sistema com baterias.'
+      }
+    };
+    
+    // Funções para manipular a interface (UI)
+    
+    // Função para abrir os modais de tópicos e portfólio
+    function openModal(modalId, data = null) {
+      const modal = document.getElementById(modalId);
+      if (!modal) return;
+      
+      if (data) {
+        if (modalId === 'topic-modal') {
+          document.getElementById('topic-content').innerHTML = `
+            <h3 class="text-xl font-bold">${data.title}</h3>
+            <p class="text-muted mt-2">${data.content}</p>
+          `;
+        } else if (modalId === 'portfolio-modal') {
+          document.getElementById('portfolio-img').src = data.src;
+          document.getElementById('portfolio-title').textContent = data.title;
+          document.getElementById('portfolio-desc').textContent = data.desc;
+        }
+      }
+      
+      modal.showModal(); // Usa a API nativa do HTML para modais
+    }
+    
+    // Função para fechar todos os modais
+    function closeModals() {
+      document.querySelectorAll('dialog').forEach(modal => modal.close());
+    }
+
+    // Funções de atalho para os modais específicos
+    function openTopic(key) {
+      openModal('topic-modal', topics[key]);
+    }
+
+    function openPortfolio(data) {
+      openModal('portfolio-modal', data);
+    }
+    
+    // Lógica para o simulador de economia
+    document.getElementById('sim-btn').addEventListener('click', () => {
+      const kwh = parseFloat(document.getElementById('sim-kwh').value) || 0;
+      const price = parseFloat(document.getElementById('sim-price').value) || 0.8;
+      const resultDiv = document.getElementById('sim-result');
+      
+      if (kwh <= 0) {
+        resultDiv.textContent = 'Por favor, informe um consumo válido.';
+        return;
+      }
+      
+      const monthlyCost = kwh * price;
+      // Estimativa conservadora de 80% de economia
+      const monthlySaving = monthlyCost * 0.8;
+      const yearlySaving = monthlySaving * 12;
+      
+      resultDiv.textContent = `Economia aprox.: R$ ${monthlySaving.toFixed(2)}/mês — R$ ${yearlySaving.toFixed(2)}/ano`;
+    });
+    
+    // Lógica para o formulário de contato
+    document.getElementById('contact-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const formStatus = document.getElementById('form-status');
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const type = document.getElementById('projectType').value;
+      const consumption = document.getElementById('consumption').value;
+      const message = document.getElementById('message').value;
+      
+      // Validação básica do telefone (números)
+      const phoneRegex = /^\(?[1-9]{2}\)?\s?9?\d{4}-?\d{4}$/;
+      if (!phoneRegex.test(phone)) {
+        formStatus.textContent = 'Telefone inválido.';
+        formStatus.style.color = 'red';
+        return;
+      }
+      
+      // Constrói a URL do WhatsApp com a mensagem pré-preenchida
+      const whatsappMessage = `Olá! Gostaria de um orçamento de energia solar.
+Nome: ${name}
+Telefone: ${phone}
+Tipo de projeto: ${type}
+Consumo (kWh/mês): ${consumption}
+Mensagem: ${message || 'Não há mensagem adicional'}`;
+      
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+      
+      // Abre o WhatsApp em uma nova aba
+      window.open(whatsappUrl, '_blank');
+      
+      formStatus.textContent = 'Redirecionando para o WhatsApp...';
+      formStatus.style.color = '#6b6f76';
+    });
+    
+    // Lógica para o chatbot simples
+    const chatbotBtn = document.getElementById('chatbot-btn');
+    const chatbotModal = document.getElementById('chatbot-modal');
+    const chatInput = document.getElementById('chat-input');
+    const chatBody = document.getElementById('chat-body');
+    
+    let chatState = 'initial';
+    let chatData = {};
+    
+    function addMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.classList.add('chat-message', 'p-3', 'rounded-xl', 'max-w-[80%]', 'break-words');
+      if (sender === 'user') {
+        msg.classList.add('bg-blue-100', 'self-end');
+      } else {
+        msg.classList.add('bg-gray-100', 'self-start');
+      }
+      msg.textContent = text;
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight; // Scrolla para o final
+    }
+    
+    function processChat(message) {
+      switch(chatState) {
+        case 'initial':
+          addMessage('Olá! Sou o assistente virtual da Amarsolar. Qual o seu nome?', 'bot');
+          chatState = 'askName';
+          break;
+        case 'askName':
+          chatData.name = message;
+          addMessage(`Olá, ${message}! Qual é o seu consumo médio mensal de energia (em kWh)?`, 'bot');
+          chatState = 'askConsumption';
+          break;
+        case 'askConsumption':
+          chatData.consumption = message;
+          addMessage('Perfeito! Para finalizar, por favor, digite seu telefone para contato.', 'bot');
+          chatState = 'askPhone';
+          break;
+        case 'askPhone':
+          chatData.phone = message;
+          addMessage('Obrigado! Entraremos em contato em breve. Se preferir, pode preencher o formulário completo.', 'bot');
+          chatState = 'final';
+          break;
+        default:
+          addMessage('Desculpe, não entendi. Tente usar o formulário para um atendimento mais completo.', 'bot');
+          break;
+      }
+    }
+    
+    // Envia a mensagem do chatbot
+    function handleChatInput() {
+      const input = chatInput.value.trim();
+      if (input === '') return;
+      addMessage(input, 'user');
+      chatInput.value = '';
+      
+      // Simula a resposta do bot após um pequeno atraso
+      setTimeout(() => {
+        processChat(input);
+      }, 500);
+    }
+    
+    // Eventos do chatbot
+    chatbotBtn.addEventListener('click', () => {
+      const isVisible = chatbotModal.classList.toggle('hidden');
+      if (!isVisible) {
+        chatbotModal.classList.remove('opacity-0', 'scale-95');
+        chatbotModal.classList.add('opacity-100', 'scale-100');
+        processChat(''); // Inicia a conversa
+      }
+    });
+
+    function hideChatbot() {
+       chatbotModal.classList.remove('opacity-100', 'scale-100');
+       chatbotModal.classList.add('opacity-0', 'scale-95');
+       setTimeout(() => {
+          chatbotModal.classList.add('hidden');
+       }, 300);
+    }
+
+    document.getElementById('chat-send').addEventListener('click', handleChatInput);
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        handleChatInput();
+      }
+    });
+
+    // Animação do carrossel de depoimentos
+    const testimonialsContainer = document.getElementById('testimonials');
+    let scrollInterval;
+    
+    // Inicia a rolagem automática
+    function startScroll() {
+      scrollInterval = setInterval(() => {
+        const currentScroll = testimonialsContainer.scrollLeft;
+        const maxScroll = testimonialsContainer.scrollWidth - testimonialsContainer.clientWidth;
+        
+        if (currentScroll >= maxScroll) {
+          testimonialsContainer.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          testimonialsContainer.scrollBy({ left: 320, behavior: 'smooth' }); // Ajusta o valor para rolar por cartão
+        }
+      }, 3500);
+    }
+
+    // Pára a rolagem quando o usuário interage
+    function stopScroll() {
+      clearInterval(scrollInterval);
+    }
+    
+    // Adiciona eventos para parar/retomar a rolagem
+    testimonialsContainer.addEventListener('mouseenter', stopScroll);
+    testimonialsContainer.addEventListener('mouseleave', startScroll);
+    testimonialsContainer.addEventListener('touchstart', stopScroll);
+    testimonialsContainer.addEventListener('touchend', startScroll);
+    
+    // Inicia a rolagem no carregamento da página
+    window.addEventListener('load', startScroll);
+
+  </script>
 </body>
+</html>
 
 </html>
 </html>
