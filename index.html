@@ -1,146 +1,210 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amarsolar - Energia Solar Residencial e Comercial</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#2C1A47" />
+  <title>Amarsolar — Energia Solar em Amargosa</title>
+  <meta name="description" content="Amarsolar: soluções de energia solar rápidas, de qualidade e com baixo custo. Projetos, orçamento e consultoria em Amargosa." />
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <!-- ==============================
-       HEADER / NAV
-  ============================== -->
   <header>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#simulador">Simulador</a>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">AM</div>
+      <div>
+        <div style="font-weight:700">Amarsolar</div>
+        <div style="font-size:12px;color:var(--muted)">Energia solar em Amargosa</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#educacao">Entenda</a>
+      <a href="#sobre">Sobre</a>
       <a href="#portfolio">Portfólio</a>
-      <a href="#depoimentos">Depoimentos</a>
-      <a href="#contato">Contato</a>
-      <a href="#educacao">Aprenda</a>
+      <a href="#orcamento" class="cta">Orçamento</a>
     </nav>
   </header>
 
-  <!-- ==============================
-       SEÇÃO HOME / HERO
-  ============================== -->
-  <section id="home">
-    <h1>Amarsolar</h1>
-    <p>Soluções em energia solar fotovoltaica para residências e empresas.</p>
-    <a id="whatsapp-btn" class="btn" target="_blank">Fale conosco</a>
-  </section>
-
-  <!-- ==============================
-       SIMULADOR
-  ============================== -->
-  <section id="simulador">
-    <h2>Simulador de Economia</h2>
-    <label for="sim-kwh">Consumo mensal (kWh):</label>
-    <input type="number" id="sim-kwh" placeholder="Ex: 250">
-
-    <label for="sim-price">Tarifa por kWh (R$):</label>
-    <input type="number" id="sim-price" placeholder="Ex: 0.80">
-
-    <button id="sim-btn">Calcular Economia</button>
-    <div id="sim-result"></div>
-  </section>
-
-  <!-- ==============================
-       PORTFÓLIO
-  ============================== -->
-  <section id="portfolio">
-    <h2>Portfólio</h2>
-    <div class="portfolio-grid">
-      <div class="portfolio-item" onclick="openPortfolio({src:'img/1.jpg', title:'Residência A', desc:'Sistema de 5kWp'})">
-        <img src="img/1-thumb.jpg" alt="Residência A">
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-card">
+        <h1 class="slogan">Rápido. Confiável. Econômico — Energia solar que cabe no seu bolso.</h1>
+        <p class="lead">Instalações residenciais e comerciais com tecnologia eficiente, redução de custos e compromisso ambiental. Transformamos sol em economia para você e sua comunidade.</p>
+        <div class="cta-row">
+          <button class="btn btn-primary" onclick="document.getElementById('orcamento').scrollIntoView({behavior:'smooth'})">Peça um orçamento</button>
+          <a class="btn btn-accent" href="#portfolio">Ver projetos</a>
+        </div>
+        <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
+          <div style="background:var(--glass);padding:10px;border-radius:10px">🚀 Entrega ágil</div>
+          <div style="background:var(--glass);padding:10px;border-radius:10px">✅ Qualidade certificada</div>
+          <div style="background:var(--glass);padding:10px;border-radius:10px">💸 Melhor custo-benefício</div>
+        </div>
+        <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+          <strong style="font-size:13px;color:var(--muted)">Simulador rápido:</strong>
+          <input id="sim-kwh" type="number" placeholder="kWh/mês" style="width:120px;padding:8px;border-radius:8px;border:1px solid #e6e7ee">
+          <input id="sim-price" type="number" placeholder="R$/kWh (ex:0.80)" style="width:120px;padding:8px;border-radius:8px;border:1px solid #e6e7ee">
+          <button class="btn" id="sim-btn">Calcular</button>
+          <div id="sim-result" style="margin-left:8px;color:var(--primary);font-weight:700"></div>
+        </div>
       </div>
-      <div class="portfolio-item" onclick="openPortfolio({src:'img/2.jpg', title:'Comercial B', desc:'Sistema de 20kWp'})">
-        <img src="img/2-thumb.jpg" alt="Comercial B">
+      <aside class="hero-card" style="background:linear-gradient(180deg,#fff,#faf8ff);text-align:center;">
+        <img src="https://placehold.co/1100x600/2C1A47/FFF?text=Energia+Solar+em+Amargosa" alt="Painéis solares" style="width:100%;height:220px;object-fit:cover;border-radius:10px;margin-bottom:12px">
+        <h3 style="margin:8px 0">Por que escolher a Amarsolar?</h3>
+        <p style="color:var(--muted);font-size:14px">Atendimento local, equipe técnica qualificada e soluções customizadas para reduzir sua conta de energia.</p>
+      </aside>
+    </section>
+
+    <!-- EDUCAÇÃO -->
+    <section id="educacao" style="margin-top:32px">
+      <h2>Entenda a energia solar</h2>
+      <p style="color:var(--muted)">Respostas claras para as principais dúvidas sobre energia solar, regulamentação e funcionamento.</p>
+      <div class="grid" id="edu-grid">
+        <div class="card" data-topic="o-que-e" onclick="openTopic('o-que-e')">
+          <h4>O que é energia solar?</h4>
+          <p>Visão geral sobre geração fotovoltaica e seus benefícios.</p>
+        </div>
+        <div class="card" onclick="openTopic('como-funciona')">
+          <h4>Como funciona a instalação?</h4>
+          <p>Processo de avaliação, projeto, instalação e comissionamento.</p>
+        </div>
+        <div class="card" onclick="openTopic('economia')">
+          <h4>Economia na conta de luz</h4>
+          <p>Estimativas de redução e retorno sobre investimento (ROI).</p>
+        </div>
+        <div class="card" onclick="openTopic('aneel')">
+          <h4>Regulamentações (ANEEL)</h4>
+          <p>Informações essenciais sobre normas e conexão à rede.</p>
+        </div>
+        <div class="card" onclick="openTopic('taxacao')">
+          <h4>Taxação</h4>
+          <p>Como impostos e tarifas podem impactar o projeto.</p>
+        </div>
+        <div class="card" onclick="openTopic('falta-luz')">
+          <h4>Falta de luz</h4>
+          <p>O que acontece quando falta energia na rede e soluções com baterias.</p>
+        </div>
+      </div>
+      <div id="topic-modal" class="modal-backdrop">
+        <div class="modal-content">
+          <button class="close-modal">✕</button>
+          <div id="topic-content"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre" style="margin-top:32px">
+      <h2>Sobre a Amarsolar</h2>
+      <div class="about">
+        <div>
+          <p>"A Amarsolar nasceu com o propósito de transformar a forma como as pessoas consomem energia, oferecendo soluções sustentáveis e acessíveis de energia solar. Fundada em Amargosa, nossa empresa tem raízes fortes na região e um compromisso com o desenvolvimento local, buscando sempre a inovação e a excelência. O projeto surgiu da visão de tornar a energia solar mais acessível e eficiente, aproveitando a abundância de sol que temos em nossa região. Acreditamos que a energia solar é o futuro, não só para reduzir custos, mas também para preservar o meio ambiente, e foi com essa convicção que começamos a atender clientes que, assim como nós, desejam um mundo mais sustentável."</p>
+          <div style="margin-top:12px" class="values">
+            <div class="value"><strong>Missão:</strong> Tornar a energia solar acessível e eficiente, promovendo desenvolvimento local e sustentabilidade.</div>
+            <div class="value"><strong>Visão:</strong> Ser referência regional em soluções solares, impulsionando a transição energética no interior do país.</div>
+            <div class="value"><strong>Valores:</strong> Integridade, inovação, compromisso com o cliente e responsabilidade ambiental.</div>
+          </div>
+        </div>
+        <aside>
+          <div style="background:var(--card);padding:14px;border-radius:12px;box-shadow:0 8px 26px rgba(44,26,71,0.04)">
+            <h4>Contato rápido</h4>
+            <p style="color:var(--muted);font-size:14px">Telefone: (75) 99984-2449<br>Email: contato@amarsolar.com.br</p>
+            <div style="margin-top:12px"><a id="quick-wa" class="btn btn-primary" href="#">Solicitar orçamento</a></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PORTFÓLIO -->
+    <section id="portfolio" style="margin-top:32px">
+      <h2>Portfólio</h2>
+      <p style="color:var(--muted)">Projetos realizados pela Amarsolar. Clique para ampliar e ver detalhes.</p>
+      <div class="gallery">
+        <!-- imagens com onclick para abrir lightbox -->
+        <img src="https://placehold.co/400x300/10B981/FFF?text=Projeto+Residencial" alt="Projeto Residencial" onclick="openPortfolio({src:this.src,title:'Projeto Residencial',desc:'Descrição do projeto.'})">
+        <img src="https://placehold.co/400x300/FACC15/FFF?text=Projeto+Comercial" alt="Projeto Comercial" onclick="openPortfolio({src:this.src,title:'Projeto Comercial',desc:'Descrição do projeto.'})">
+        <img src="https://placehold.co/400x300/3B82F6/FFF?text=Projeto+Industrial" alt="Projeto Industrial" onclick="openPortfolio({src:this.src,title:'Projeto Industrial',desc:'Descrição do projeto.'})">
+      </div>
+    </section>
+
+    <!-- ORÇAMENTO -->
+    <section id="orcamento" style="margin-top:32px">
+      <h2>Contato & Orçamento</h2>
+      <p style="color:var(--muted)">Preencha o formulário e nossa equipe entrará em contato.</p>
+      <form id="contact-form" action="" onsubmit="handleForm(event)">
+        <input type="text" id="name" name="name" placeholder="Nome *" required>
+        <input type="tel" id="phone" name="phone" placeholder="Telefone *" required>
+        <select id="projectType" name="projectType" required>
+          <option value="">Tipo de projeto*</option>
+          <option>Residencial</option>
+          <option>Comercial</option>
+          <option>Industrial</option>
+          <option>Outro</option>
+        </select>
+        <input type="number" id="consumption" name="consumption" placeholder="Consumo (kWh/mês) *" required>
+        <textarea id="message" name="message" placeholder="Mensagem"></textarea>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button class="btn btn-primary" type="submit">Enviar</button>
+          <div id="form-status" style="color:var(--muted)"></div>
+        </div>
+      </form>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section style="margin-top:32px">
+      <h2>O que nossos clientes dizem</h2>
+      <div class="testimonials" id="testimonials">
+        <div class="testimonial">"Excelente serviço e redução real na conta de energia." — Maria, Amargosa</div>
+        <div class="testimonial">"Equipe rápida e atenciosa. Recomendo." — João, Itaquara</div>
+        <div class="testimonial">"Projeto comercial que otimizou nossos custos." — Mercado Amargosa</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div>
+        <strong>Amarsolar</strong><br>
+        <small style="color:var(--muted)">Energia solar em Amargosa — compromisso com o futuro.</small>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="#">Instagram</a>
       </div>
     </div>
-  </section>
+  </footer>
 
-  <!-- LIGHTBOX PORTFÓLIO -->
+  <!-- Lightbox e WhatsApp -->
   <div id="lightbox" class="modal-backdrop">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <img id="lightbox-img" src="" alt="">
-      <h3 id="lightbox-title"></h3>
-      <p id="lightbox-desc"></p>
+    <div class="modal-content" style="max-width:900px">
+      <button class="close-modal">✕</button>
+      <img id="lightbox-img" src="" alt="Ampliação" style="max-width:100%;max-height:60vh;border-radius:10px;object-fit:contain">
+      <div id="lightbox-details" style="margin-top:12px">
+        <h4 id="lightbox-title" style="margin:0"></h4>
+        <p id="lightbox-desc" style="color:var(--muted);font-size:14px;margin:5px 0 0"></p>
+      </div>
+    </div>
+  </div>
+  <a id="whatsapp-btn" class="whatsapp" href="#" target="_blank" aria-label="WhatsApp">
+    <span>Fale conosco</span>
+  </a>
+
+  <!-- Chatbot -->
+  <div class="chatbot-btn" id="chatbot-btn">💬</div>
+  <div class="chatbot-modal" id="chatbot-modal">
+    <div class="chatbot-header">
+      <span>Chatbot Amarsolar</span>
+      <button class="close-modal">✕</button>
+    </div>
+    <div class="chatbot-body" id="chat-body"></div>
+    <div class="chatbot-input-container">
+      <input type="text" class="chatbot-input" id="chat-input" placeholder="Digite sua mensagem...">
+      <button class="chatbot-send" id="chat-send">▶</button>
     </div>
   </div>
 
-  <!-- ==============================
-       DEPOIMENTOS
-  ============================== -->
-  <section id="depoimentos">
-    <h2>Depoimentos</h2>
-    <div id="testimonials" class="testimonials-container">
-      <div class="testimonial">“Equipe excelente! Meu sistema funciona perfeitamente.” – João S.</div>
-      <div class="testimonial">“Reduzi 80% da conta de luz em 6 meses.” – Maria T.</div>
-      <div class="testimonial">“Atendimento rápido e instalação impecável.” – Carlos F.</div>
-    </div>
-  </section>
-
-  <!-- ==============================
-       FORMULÁRIO DE CONTATO
-  ============================== -->
-  <section id="contato">
-    <h2>Solicite seu Orçamento</h2>
-    <form id="contact-form">
-      <input type="text" id="name" placeholder="Nome completo" required>
-      <input type="text" id="phone" placeholder="Telefone" required>
-      <input type="text" id="projectType" placeholder="Tipo de projeto" required>
-      <input type="number" id="consumption" placeholder="Consumo mensal (kWh)" required>
-      <textarea id="message" placeholder="Mensagem (opcional)"></textarea>
-      <button type="submit">Enviar</button>
-      <div id="form-status"></div>
-    </form>
-
-    <!-- Contato rápido -->
-    <a id="quick-wa" class="btn" target="_blank">Solicitar pelo WhatsApp</a>
-  </section>
-
-  <!-- ==============================
-       EDUCAÇÃO / INFORMAÇÃO
-  ============================== -->
-  <section id="educacao">
-    <h2>Aprenda Sobre Energia Solar</h2>
-    <div class="topics">
-      <button onclick="openTopic('o-que-e')">O que é?</button>
-      <button onclick="openTopic('como-funciona')">Como funciona?</button>
-      <button onclick="openTopic('economia')">Economia</button>
-      <button onclick="openTopic('aneel')">Regulamentação</button>
-      <button onclick="openTopic('taxacao')">Taxação</button>
-      <button onclick="openTopic('falta-luz')">Falta de Luz</button>
-    </div>
-  </section>
-
-  <!-- MODAL EDUCAÇÃO -->
-  <div id="topic-modal" class="modal-backdrop">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <div id="topic-content"></div>
-    </div>
-  </div>
-
-  <!-- ==============================
-       CHATBOT
-  ============================== -->
-  <button id="chatbot-btn" class="chatbot-btn">💬</button>
-  <div id="chatbot-modal" class="modal-backdrop">
-    <div class="modal-content chat-content">
-      <span class="close-modal">&times;</span>
-      <div id="chat-body" class="chat-body"></div>
-      <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
-      <button id="chat-send">Enviar</button>
-    </div>
-  </div>
-
-  <!-- ==============================
-       SCRIPTS
-  ============================== -->
-  <script src="main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
