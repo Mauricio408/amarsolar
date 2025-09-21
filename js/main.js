@@ -1,143 +1,211 @@
-// ======= Simulador de economia =======
-document.getElementById('sim-btn').addEventListener('click', () => {
-  const kwh = parseFloat(document.getElementById('sim-kwh').value);
-  const price = parseFloat(document.getElementById('sim-price').value);
-  if(!isNaN(kwh) && !isNaN(price)){
-    const result = kwh * price * 0.85; // economia estimada
-    document.getElementById('sim-result').textContent = `Economia: R$ ${result.toFixed(2)}/mês`;
+// main.js
+
+const WHATSAPP_NUMBER = '5575999842449';
+const EMAIL_RECEIVER = 'mauriciosantana408@gmail.com';
+const GOOGLE_FORM_ACTION = ''; // COLOQUE A URL AQUI!
+const GOOGLE_FORM_FIELD_MAPPING = {
+  'name': 'entry.123456789',
+  'phone': 'entry.987654321',
+  'projectType': 'entry.1122334455',
+  'consumption': 'entry.5544332211',
+  'message': 'entry.9988776655'
+};
+
+function on(el, evt, handler){
+  if(!el) return;
+  if(typeof el.addEventListener === 'function') return el.addEventListener(evt, handler);
+  if(typeof el.attachEvent === 'function') return el.attachEvent('on'+evt, handler);
+  el['on'+evt] = handler;
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+
+  // === WhatsApp Buttons ===
+  const waBtn = document.getElementById('whatsapp-btn');
+  const quickWa = document.getElementById('quick-wa');
+  const DEFAULT_WA_MESSAGE = 'Olá! Gostaria de um orçamento de energia solar para minha residência.';
+  if(WHATSAPP_NUMBER && WHATSAPP_NUMBER.trim() !== ''){
+    const waBase = `https://wa.me/${WHATSAPP_NUMBER}`;
+    const waUrl = `${waBase}?text=${encodeURIComponent(DEFAULT_WA_MESSAGE)}`;
+    if(waBtn) waBtn.href = waUrl;
+    if(quickWa) quickWa.href = waUrl;
   } else {
-    document.getElementById('sim-result').textContent = 'Preencha os campos corretamente.';
+    if(waBtn) waBtn.style.display = 'none';
+    if(quickWa) quickWa.style.display = 'none';
   }
-});
 
-// ======= Modal Educativo =======
-function openTopic(topic){
-  const modal = document.getElementById('topic-modal');
-  const content = document.getElementById('topic-content');
+  // === Simulador de economia ===
+  const simBtn = document.getElementById('sim-btn');
+  function calcSimInternal(){
+    const kwh = Number(document.getElementById('sim-kwh').value) || 0;
+    const price = Number(document.getElementById('sim-price').value) || 0.8;
+    const out = document.getElementById('sim-result');
+    if(kwh <= 0){ if(out) out.textContent='Informe kWh/mês'; return; }
+    const monthlyCost = kwh * price;
+    const estimatedReduction = monthlyCost * 0.8;
+    const monthlySaving = estimatedReduction;
+    const yearlySaving = monthlySaving * 12;
+    if(out) out.textContent = `Economia aprox.: R$ ${monthlySaving.toFixed(2)}/mês — R$ ${yearlySaving.toFixed(2)}/ano`;
+  }
+  if(simBtn) on(simBtn, 'click', calcSimInternal);
+  window.calcSim = calcSimInternal;
+
+  // === Modal de tópicos educativos ===
+  const topicModal = document.getElementById('topic-modal');
+  const topicContent = document.getElementById('topic-content');
+  const closeBtns = document.querySelectorAll('.close-modal');
   const topics = {
-    'o-que-e':'Energia solar é a conversão da luz solar em energia elétrica...',
-    'como-funciona':'O processo de instalação envolve avaliação, projeto, instalação e comissionamento...',
-    'economia':'Redução média na conta de luz pode variar de 60 a 95%...',
-    'aneel':'A ANEEL regulamenta e autoriza conexão à rede...',
-    'taxacao':'Alguns impostos podem impactar o custo final...',
-    'falta-luz':'Soluções com baterias permitem uso mesmo sem energia da rede...'
+    'o-que-e':'<h3>O que é energia solar?</h3><p>A energia solar fotovoltaica converte luz do sol em eletricidade através de painéis solares. É limpa, renovável e reduz a dependência de combustíveis fósseis.</p>',
+    'como-funciona':'<h3>Como funciona a instalação?</h3><p>Primeiro fazemos um estudo de viabilidade, depois projetamos o sistema, instalamos os painéis e o inversor, e comissionamos para conectar à rede elétrica.</p>',
+    'economia':'<h3>Economia na conta de luz</h3><p>Sistemas bem projetados podem reduzir significativamente a conta. O ROI depende do consumo, tarifa e do investimento inicial.</p>',
+    'aneel':'<h3>Regulamentações (ANEEL)</h3><p>A ANEEL regulamenta o sistema de compensação de energia (net metering). É importante seguir normas para conexão à rede.</p>',
+    'taxacao':'<h3>Taxação</h3><p>Tributos e tarifas variam; consideramos impostos locais e custos de instalação no orçamento.</p>',
+    'falta-luz':'<h3>Falta de luz</h3><p>Sem baterias, sistemas conectados à rede não funcionam em queda da rede por segurança. Oferecemos soluções com armazenamento para continuidade.</p>'
   };
-  content.textContent = topics[topic] || 'Conteúdo não disponível.';
-  modal.style.display = 'flex';
-}
-document.querySelectorAll('.close-modal').forEach(btn=>{
-  btn.addEventListener('click',()=>document.querySelectorAll('.modal-backdrop').forEach(m=>m.style.display='none'));
-});
+  function openTopicInternal(key){
+    if(topicContent) topicContent.innerHTML = topics[key] || '<p>Conteúdo em desenvolvimento.</p>';
+    if(topicModal) topicModal.classList.add('active');
+  }
+  function closeModals(){
+    const modals = document.querySelectorAll('.modal-backdrop.active');
+    modals.forEach(m => m.classList.remove('active'));
+  }
+  if(closeBtns) closeBtns.forEach(btn => on(btn, 'click', closeModals));
+  window.openTopic = openTopicInternal;
+  window.closeModals = closeModals;
 
-// ======= Lightbox Portfólio =======
-function openPortfolio({src,title,desc}){
-  document.getElementById('lightbox-img').src = src;
-  document.getElementById('lightbox-title').textContent = title;
-  document.getElementById('lightbox-desc').textContent = desc;
-  document.getElementById('lightbox').style.display='flex';
-}
+  // === Modal Portfólio ===
+  const portfolioModal = document.getElementById('lightbox');
+  const portfolioImg = document.getElementById('lightbox-img');
+  const portfolioTitle = document.getElementById('lightbox-title');
+  const portfolioDesc = document.getElementById('lightbox-desc');
+  function openPortfolio(data){
+    if(portfolioImg) portfolioImg.src = data.src;
+    if(portfolioTitle) portfolioTitle.textContent = data.title;
+    if(portfolioDesc) portfolioDesc.textContent = data.desc;
+    if(portfolioModal) portfolioModal.classList.add('active');
+  }
+  window.openPortfolio = openPortfolio;
 
-// ======= WhatsApp Orçamento =======
-const waBtn = document.getElementById('quick-wa');
-waBtn.href = `https://wa.me/5575999842449?text=Ol%C3%A1%2C+gostaria+de+um+or%C3%A7amento+de+energia+solar.`;
+  // === Scroll automático de depoimentos ===
+  const cont = document.getElementById('testimonials');
+  if(cont){
+    setInterval(()=>{
+      const maxScroll = cont.scrollWidth - cont.clientWidth;
+      if(maxScroll <= 0) return;
+      if(cont.scrollLeft + cont.clientWidth >= cont.scrollWidth) cont.scrollLeft = 0;
+      else { try{ cont.scrollBy({left:310,behavior:'smooth'}); } catch(e){ cont.scrollLeft += 310; } }
+    }, 3500);
+  }
 
-// ======= Formulário =======
-function handleForm(e){
-  e.preventDefault();
-  const name = document.getElementById('name').value;
-  const phone = document.getElementById('phone').value;
-  const project = document.getElementById('projectType').value;
-  const consumption = document.getElementById('consumption').value;
-  const message = document.getElementById('message').value;
-  const text = `Olá, meu nome é ${name}, telefone ${phone}, projeto: ${project}, consumo: ${consumption} kWh/mês. ${message}`;
-  window.open(`https://wa.me/5575999842449?text=${encodeURIComponent(text)}`,'_blank');
-  document.getElementById('form-status').textContent = 'Redirecionando para WhatsApp...';
-}
-
-// ======= Chatbot Inteligente =======
-const chatbotBtn = document.getElementById('chatbot-btn');
-const chatbotModal = document.getElementById('chatbot-modal');
-chatbotBtn.addEventListener('click', () => chatbotModal.style.display = 'flex');
-chatbotModal.querySelector('.close-modal').addEventListener('click', () => chatbotModal.style.display = 'none');
-
-const chatSend = document.getElementById('chat-send');
-const chatInput = document.getElementById('chat-input');
-const chatBody = document.getElementById('chat-body');
-
-chatSend.addEventListener('click', sendMessage);
-chatInput.addEventListener('keypress', e => { if(e.key==='Enter') sendMessage(); });
-
-function sendMessage(){
-    const msg = chatInput.value.trim();
-    if(!msg) return;
-
-    // Mostra a mensagem do usuário
-    const userMsg = document.createElement('div');
-    userMsg.textContent = 'Você: ' + msg;
-    userMsg.style.margin = '4px 0';
-    userMsg.style.fontWeight = '600';
-    chatBody.appendChild(userMsg);
-    chatInput.value = '';
-    chatBody.scrollTop = chatBody.scrollHeight;
-
-    // Resposta do bot baseada em palavras-chave
-    const botResponse = getBotResponse(msg.toLowerCase());
-    const botMsg = document.createElement('div');
-    botMsg.textContent = 'Amarsolar: ' + botResponse;
-    botMsg.style.margin = '4px 0';
-    botMsg.style.color = '#1F2937';
-    chatBody.appendChild(botMsg);
-    chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-// ======= Função de Respostas Dinâmicas =======
-function getBotResponse(msg){
-    const responses = [
-        {
-            keywords: ['instalação','instalar','como instalar'],
-            reply: 'A instalação envolve avaliação do local, dimensionamento do sistema, instalação dos painéis e inversores, e comissionamento. Podemos agendar uma visita técnica!'
-        },
-        {
-            keywords: ['economia','conta de luz','quanto economizo','redução'],
-            reply: 'Com energia solar, a economia na conta de luz geralmente varia entre 60% e 95%, dependendo do consumo e da radiação solar local.'
-        },
-        {
-            keywords: ['painel','placa','potência','kwp'],
-            reply: 'Os painéis solares são dimensionados conforme seu consumo médio. Por exemplo, um sistema residencial médio precisa de 8 a 12 painéis de 580W para zerar a conta.'
-        },
-        {
-            keywords: ['bateria','armazenamento','backup','sem luz'],
-            reply: 'Podemos instalar baterias para armazenar energia e garantir funcionamento mesmo durante queda de luz.'
-        },
-        {
-            keywords: ['aneel','regulamento','conexão','norma'],
-            reply: 'A ANEEL regulamenta a conexão à rede elétrica e garante que seu sistema esteja dentro das normas de segurança e compensação de energia.'
-        },
-        {
-            keywords: ['preço','custo','investimento'],
-            reply: 'O investimento depende da potência do sistema, tipo de painel e instalação. Podemos enviar um orçamento personalizado via WhatsApp.'
-        },
-        {
-            keywords: ['manutenção','assistência','suporte','problema'],
-            reply: 'Oferecemos manutenção completa e monitoramento remoto. Qualquer problema é atendido rapidamente.'
-        },
-        {
-            keywords: ['contato','telefone','whatsapp','orçamento'],
-            reply: 'Você pode solicitar um orçamento diretamente pelo WhatsApp: (75) 99984-2449.'
-        }
-    ];
-
-    // Verifica cada resposta
-    for(let r of responses){
-        for(let kw of r.keywords){
-            if(msg.includes(kw)){
-                return r.reply;
-            }
-        }
+  // === Formulário de contato ===
+  const form = document.getElementById('contact-form');
+  const statusDiv = document.getElementById('form-status');
+  function isValidPhone(p){
+    const regex = /^\(?[1-9]{2}\)?\s?9?\d{4}-?\d{4}$/;
+    return regex.test(p);
+  }
+  function handleFormInternal(e){
+    e && e.preventDefault();
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const type = document.getElementById('projectType').value;
+    const consumption = document.getElementById('consumption').value;
+    if(!name || !phone || !type || !consumption){
+      statusDiv.textContent = 'Por favor, preencha todos os campos obrigatórios.';
+      statusDiv.style.color = 'red';
+      return;
     }
+    if(!isValidPhone(phone)){
+      statusDiv.textContent = 'Telefone inválido.';
+      statusDiv.style.color = 'red';
+      return;
+    }
+    statusDiv.textContent = 'Enviando...';
+    statusDiv.style.color = '#6b6f76';
 
-    // Resposta padrão se nenhuma palavra-chave for detectada
-    return 'Desculpe, não entendi. Pode reformular? Posso te ajudar com instalação, economia, baterias, manutenção ou orçamento.';
-}
+    const formData = new FormData();
+    formData.append(GOOGLE_FORM_FIELD_MAPPING.name, name);
+    formData.append(GOOGLE_FORM_FIELD_MAPPING.phone, phone);
+    formData.append(GOOGLE_FORM_FIELD_MAPPING.projectType, type);
+    formData.append(GOOGLE_FORM_FIELD_MAPPING.consumption, consumption);
 
-processChat(''); // inicia conversa
+    if(GOOGLE_FORM_ACTION && GOOGLE_FORM_ACTION.trim() !== ''){
+      fetch(GOOGLE_FORM_ACTION, {method:'POST', mode:'no-cors', body:formData})
+        .then(()=>{ statusDiv.textContent='Enviado! Entraremos em contato em breve.'; statusDiv.style.color='#6b6f76'; form.reset(); })
+        .catch(err=>{ statusDiv.textContent='Erro ao enviar. Tente novamente ou use o WhatsApp.'; statusDiv.style.color='red'; });
+    } else {
+      const waMessage = `Olá! Gostaria de um orçamento de energia solar.\nNome: ${name}\nTelefone: ${phone}\nTipo: ${type}\nConsumo(kWh/mês): ${consumption}`;
+      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+      window.open(waUrl, '_blank');
+      statusDiv.textContent='Redirecionando para o WhatsApp...';
+    }
+  }
+  window.handleForm = handleFormInternal;
+
+  if(form) on(form, 'submit', handleFormInternal);
+
+  // === Smooth Scroll ===
+  const anchors = document.querySelectorAll('a[href^="#"]');
+  if(anchors && anchors.length){
+    Array.prototype.forEach.call(anchors, function(a){
+      on(a, 'click', function(e){
+        if(a.getAttribute('href') === '#') return;
+        e && e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) try{ el.scrollIntoView({behavior:'smooth'}); } catch(err){ el.scrollIntoView(); }
+      });
+    });
+  }
+
+  // === Chatbot ===
+  const chatbotBtn = document.getElementById('chatbot-btn');
+  const chatbotModal = document.getElementById('chatbot-modal');
+  const chatBody = document.getElementById('chat-body');
+  const chatInput = document.getElementById('chat-input');
+  const chatSend = document.getElementById('chat-send');
+
+  let chatState = 'initial';
+
+  function addMessage(text, sender){
+    const msg = document.createElement('div');
+    msg.classList.add('chat-message', `chat-${sender}`);
+    msg.textContent = text;
+    chatBody.appendChild(msg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function processChat(message){
+    switch(chatState){
+      case 'initial':
+        addMessage('Olá! Sou o assistente virtual da Amarsolar. Qual o seu nome?', 'bot');
+        chatState='askName';
+        break;
+      case 'askName':
+        addMessage('Olá, '+message+'. Prazer! Qual é o seu consumo médio mensal de energia (em kWh)?', 'bot');
+        chatState='askConsumption';
+        break;
+      case 'askConsumption':
+        addMessage('Perfeito! Para finalizarmos, digite seu telefone para contato.', 'bot');
+        chatState='askPhone';
+        break;
+      case 'askPhone':
+        addMessage('Obrigado! Entraremos em contato em breve. Você pode agora preencher o formulário completo.', 'bot');
+        chatState='final';
+        break;
+      default:
+        addMessage('Desculpe, não entendi.', 'bot');
+        break;
+    }
+  }
+
+  on(chatbotBtn, 'click', ()=>chatbotModal.classList.toggle('active'));
+  on(chatSend, 'click', ()=>handleChatInput());
+  on(chatInput, 'keydown', e => { if(e.key==='Enter') handleChatInput(); });
+
+  function handleChatInput(){
+    const input = chatInput.value.trim();
+    if(input==='') return;
+    addMessage(input, 'user');
+    chatInput.value='';
